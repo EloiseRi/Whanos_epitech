@@ -1,0 +1,13 @@
+FROM node:14.17.5
+
+SHELL ["/bin/bash", "-c"]
+
+RUN npm install befunge93
+
+COPY . /app
+
+WORKDIR /app
+
+COPY app/ .
+
+CMD ["node", "interpreter.js", "-f", "./main.bf"]
