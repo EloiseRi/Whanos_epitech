@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  registry:
+    image: registry
+    container_name: private_registry
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+  jenkins:
+    build: .
+    image: whanos-jenkins
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    volumes:
+      - "../images:/var/jenkins_home/images"
+      - "./checker.py:/var/jenkins_home/checker.py"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    env_file:
+      - jenkins.env
